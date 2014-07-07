@@ -14,6 +14,7 @@ br.set_handle_gzip(False)
 br.set_handle_redirect(True)
 br.set_handle_referer(True)
 br.set_handle_robots(False)
+br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
 
 username = raw_input("please enter username : ")
 password = raw_input("please enter password :")

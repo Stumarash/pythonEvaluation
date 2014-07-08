@@ -34,7 +34,7 @@ def patterns(string):
     author = re.findall(pattern2, string)
     pattern3 = re.compile(regexDate)
     date = re.findall(pattern3, string)
-    print head, "\n", author, "\n", date
+    print "headlines : ", head, "\n", "author : ", author, "\n", "date : " ,date
 
 
 def validate_user(user_name, user_password, html):

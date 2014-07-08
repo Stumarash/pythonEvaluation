@@ -20,9 +20,9 @@ username = raw_input("please enter username : ")
 password = raw_input("please enter password :")
 USERNAME = "Tumelom"
 PASSWORD = "Tumelom123"
-regexHeadLine = '<h2 class="[^.]*"></h2>'
-regexAuthor = '<a href="[^.]*" rel="nofollow">[^.]*</a>'
-regexDate = '<time id="[^.]*" datetime="[^.]*">[^.]*</time>'
+regexHeadLine = '<h2 class="(.+?)*"></h2>'
+regexAuthor = '<a href="(.+?)*" rel="nofollow">(.+?)*</a>'
+regexDate = '<time id="(.+?)*" datetime="(.+?)*">(.+?)*</time>'
 
 htmlfile = br.open(URL).read()
 

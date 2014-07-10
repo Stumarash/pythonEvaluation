@@ -1,3 +1,5 @@
+from sklearn.externals.joblib.test.test_numpy_pickle import _class
+
 __author__ = 'Tumelom'
 
 import mechanize
@@ -22,7 +24,7 @@ br.set_handle_referer(True)
 br.set_handle_robots(False)
 br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
 
-#user is expected to input his/her login details
+# user is expected to input his/her login details
 nickname = raw_input("please enter your nickname :")
 password = raw_input("please enter your password :")
 
@@ -37,11 +39,23 @@ for link in br.links():
 #i am selecting the first form and assign it user details
 #if found is found the will be submitted
 #else control not found error will be thrown
-#and headlines,author and date of headlines will be displayed
 try:
     br.select_form(nr=0)
     br.form["unickname"] = nickname
     br.form["upasswd"] = password
     br.submit()
 except ControlNotFoundError:
-    print soup.find_all("header",_class = "story")
+    print "couldn't login no control found!"
+
+#here i am trying to collect page headlines,date it was published and author
+try:
+    print "headlines : " + soup.findAll('span', {'id': 'title-62092829'})[1].contents[0]
+except:IndexError
+
+try:
+    print "author : " + soup.findAll('div', {'class': 'details'})[1].contents[0]
+except :IndexError
+
+try:
+    print "date : " + soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
+except:IndexError

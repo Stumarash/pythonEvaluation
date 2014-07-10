@@ -2,10 +2,16 @@ __author__ = 'Tumelom'
 
 import mechanize
 import cookielib
-import re
+from bs4 import BeautifulSoup
+import urllib2
+from mechanize._form import ControlNotFoundError
 
-URL = "http://slashdot.org/"
+URL = "https://slashdot.org"
 br = mechanize.Browser()
+br.open(URL)
+html_file = urllib2.urlopen(URL)
+soup = BeautifulSoup(html_file)
+
 cj = cookielib.LWPCookieJar()
 br.set_cookiejar(cj)
 
@@ -16,32 +22,26 @@ br.set_handle_referer(True)
 br.set_handle_robots(False)
 br.set_handle_refresh(mechanize._http.HTTPRefreshProcessor(), max_time=1)
 
-username = raw_input("please enter username : ")
-password = raw_input("please enter password :")
-USERNAME = "Tumelom"
-PASSWORD = "Tumelom123"
-regexHeadLine = '<h2 class="(.+?)*"></h2>'
-regexAuthor = '<a href="(.+?)*" rel="nofollow">(.+?)*</a>'
-regexDate = '<time id="(.+?)*" datetime="(.+?)*">(.+?)*</time>'
+#user is expected to input his/her login details
+nickname = raw_input("please enter your nickname :")
+password = raw_input("please enter your password :")
 
-htmlfile = br.open(URL).read()
+#i loop through links that are available in the browser
+#when link url is the same as target url then browser will navigate to that link
+for link in br.links():
+    target_url = "my/login"
+    if link.url == target_url:
+        br.follow_link(link)
 
-
-def patterns(string):
-    pattern1 = re.compile(regexHeadLine)
-    head = re.findall(pattern1, string)
-    pattern2 = re.compile(regexAuthor)
-    author = re.findall(pattern2, string)
-    pattern3 = re.compile(regexDate)
-    date = re.findall(pattern3, string)
-    print "headlines : ", head, "\n", "author : ", author, "\n", "date : " ,date
-
-
-def validate_user(user_name, user_password, html):
-    if user_name == USERNAME and user_password == PASSWORD:
-        print html
-    else:
-        return patterns(html)
-
-
-validate_user(username, password, htmlfile)
+#here i am using exception handling to login
+#i am selecting the first form and assign it user details
+#if found is found the will be submitted
+#else control not found error will be thrown
+#and headlines,author and date of headlines will be displayed
+try:
+    br.select_form(nr=0)
+    br.form["unickname"] = nickname
+    br.form["upasswd"] = password
+    br.submit()
+except ControlNotFoundError:
+    print soup.find_all("header",_class = "story")

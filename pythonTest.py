@@ -7,6 +7,7 @@ import cookielib
 from bs4 import BeautifulSoup
 import urllib2
 from mechanize._form import ControlNotFoundError
+import re
 
 URL = "https://slashdot.org"
 br = mechanize.Browser()
@@ -61,7 +62,7 @@ try:
 except :IndexError
 
 try:
-    print "date : " + soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
+    print "date : " + soup.findAll('time',{'datetime': re.findAll(re.compile("(.+?)", html_file))})[1].content[0]
 except:IndexError
 =======
 #here i am trying to collect page headlines,date it was published and author
@@ -74,7 +75,7 @@ try:
 except :IndexError
 
 try:
-    date = soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
+    date = soup.findAll('time',{'datetime': re.findAll(re.compile("(.+?)", html_file))})[1].content[0]
 except:IndexError
 
 print "%s,%s,%s" % (headlines, author, date)

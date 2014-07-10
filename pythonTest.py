@@ -49,13 +49,15 @@ except ControlNotFoundError:
 
 #here i am trying to collect page headlines,date it was published and author
 try:
-    print "headlines : " + soup.findAll('span', {'id': 'title-62092829'})[1].contents[0]
+    headlines = soup.findAll('span', {'id': 'title-62092829'})[1].contents[0]
 except:IndexError
 
 try:
-    print "author : " + soup.findAll('div', {'class': 'details'})[1].contents[0]
+    author = soup.findAll('div', {'class': 'details'})[1].contents[0]
 except :IndexError
 
 try:
-    print "date : " + soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
+    date = soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
 except:IndexError
+
+print "%s,%s,%s,%s" % (headlines, author, date)

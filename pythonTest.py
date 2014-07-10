@@ -60,4 +60,4 @@ try:
     date = soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
 except:IndexError
 
-print "%s,%s,%s,%s" % (headlines, author, date)
+print "%s,%s,%s" % (headlines, author, date)

@@ -39,7 +39,10 @@ for link in br.links():
 #i am selecting the first form and assign it user details
 #if found is found the will be submitted
 #else control not found error will be thrown
+<<<<<<< HEAD
 #and headlines,author and date a story was published
+=======
+>>>>>>> origin/master
 try:
     br.select_form(nr=0)
     br.form["unickname"] = nickname
@@ -48,6 +51,7 @@ try:
 except ControlNotFoundError:
     print "couldn't login no control found!"
 
+<<<<<<< HEAD
 try:
     print "headlines : " + soup.findAll('span', {'id': 'title-62092829'})[1].contents[0]
 except:IndexError
@@ -59,3 +63,19 @@ except :IndexError
 try:
     print "date : " + soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
 except:IndexError
+=======
+#here i am trying to collect page headlines,date it was published and author
+try:
+    headlines = soup.findAll('span', {'id': 'title-62092829'})[1].contents[0]
+except:IndexError
+
+try:
+    author = soup.findAll('div', {'class': 'details'})[1].contents[0]
+except :IndexError
+
+try:
+    date = soup.findAll('time',{'datetime': '(.+?)'})[1].content[0]
+except:IndexError
+
+print "%s,%s,%s" % (headlines, author, date)
+>>>>>>> origin/master
